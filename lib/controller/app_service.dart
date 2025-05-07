@@ -7,21 +7,34 @@ class AppService extends GetxController {
   final supabase = Supabase.instance.client;
   final _password = "123qwer123";
 
-  Future<void> createUser(int i) async {
+ Future<void> createUser(int i) async {
+  try {
+    // 1. Sign up user
     final response = await supabase.auth.signUp(
       email: "test${i}@gmail.com",
       password: _password,
     );
-    // user come from auth
-    await supabase.from("contant").insert({
+
+    // 2. Insert into contact with valid username
+    await supabase.from("contact").insert({
       'id': response.user!.id,
-      "username": i,
-    }).execute();
+      'username': 'user$i', // Modified to meet constraint
+    });
+
+    print('Successfully created test${i}@gmail.com');
+  } on AuthApiException catch (e) {
+    print('Auth error for test${i}@gmail.com: ${e.message}');
+  } on PostgrestException catch (e) {
+    print('Database error for test${i}@gmail.com: ${e.message}');
   }
+}
     Future<void> createUsers() async {
-      await createUser(1);
-      await createUser(2);
-    }
+    try {
+  await createUser(1);
+  await createUser(2);
+} catch (e) {
+  print("Error creating users: $e");
+}}
 
     Future<void> signIn(int i) async {
       await supabase.auth.signInWithPassword(
@@ -32,9 +45,9 @@ class AppService extends GetxController {
     Future<void> signOut() async {
         await supabase.auth.signOut();
     }
-    Future <String> getUserId()async {
+    Future<PostgrestMap> getUserId()async {
        final response = await supabase.from('contact').select('id').not('id', 'eq', supabase.auth.currentUser!.id);
-        return response.data[0] ;
+        return response[0] ;
 
     }
       Stream<List<Message>> getMessages() {
@@ -56,6 +69,7 @@ class AppService extends GetxController {
 
   String getCurrentUserEmail() =>
       isAuthentificated() ? supabase.auth.currentUser!.email ?? '' : '';
+ 
 
 }
 
