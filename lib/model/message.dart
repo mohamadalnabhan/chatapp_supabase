@@ -28,16 +28,18 @@ class Message {
        is_mine = true;
 
   // ignore: avoid_types_as_parameter_names
-  Message.fromJson(Map<String, dynamic> json, String userId)
-    : id = json['id'],
-      content = json['content'],
-      mark_as_read = json['mark_as_read'],
-      user_from = json["user_from"],
-      user_to = json["user_to"],
-      created_at = DateTime.parse(json['createc_at']),
-    is_mine = json['user_from'] == userId;
-
-
+  factory Message.fromJson(Map<String, dynamic> json, String userId) {
+    return Message(
+      id: json['id']?.toString() ?? '',
+      content: json['content']?.toString() ?? '',
+      mark_as_read: json['mark_as_read'] ?? false,
+      user_from: json['user_from']?.toString() ?? '',
+      user_to: json['user_to']?.toString() ?? '',
+      created_at: DateTime.parse(json['created_at']?.toString() ?? 
+          DateTime.now().toIso8601String()),
+      is_mine: json['user_from']?.toString() == userId,
+    );
+  }
   Map toMap() {
     return {
       'content': content,
