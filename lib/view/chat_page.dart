@@ -47,7 +47,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('chat'), centerTitle: true),
+      appBar: AppBar(title: Text('chat',style: TextStyle(color: Colors.white),), centerTitle: true , backgroundColor: Colors.indigo,),
       body: StreamBuilder<List<Message>>(
         stream: _controller.getMessages(),
         builder: (context, snapshot) {

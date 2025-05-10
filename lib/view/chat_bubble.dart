@@ -9,7 +9,7 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatContent = [
+    var chatContent = [
       const SizedBox(width: 12),
       Flexible(
         child: Container(
@@ -28,6 +28,9 @@ class ChatBubble extends StatelessWidget {
       ),
          const SizedBox(width: 60),
     ];
+    if(message.is_mine){
+      chatContent = chatContent.reversed.toList();
+    }
 
     return Padding(padding: EdgeInsets.symmetric(vertical: 8 ,horizontal: 12),
     child: Row(

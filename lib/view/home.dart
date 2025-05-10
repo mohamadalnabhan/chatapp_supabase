@@ -1,7 +1,6 @@
 import 'package:chatapp_supabase/controller/app_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,48 +12,76 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final _controller = Get.find<AppService>();
 
-
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(
+      appBar: AppBar(
+        backgroundColor: Colors.indigo, // AppBar color
         title: Text(
           _controller.isAuthentificated()
               ? _controller.getCurrentUserEmail()
-              : "chat",
+              : "chat",style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(onPressed: (){
-            _controller.createUsers();
-            print('done');
-          }, child:Text( "created users")
-          ),
-          const SizedBox(height: 10,),
-          ElevatedButton(onPressed: (){
-            _controller.signIn(1);
-            print("done");
-          }, child:Text( "Login user 1")
-          ),
-          const SizedBox(height: 10,),
-          ElevatedButton(onPressed: (){
-            _controller.signIn(2);
-            print("login 2" );
-          }, child:Text( "Login user 2")
-          ),
-          const SizedBox(height: 10,)
-          ,ElevatedButton(onPressed: (){
-            _controller.signOut();
-          }, child:Text( "Signout")
-          ),
-          const SizedBox(height: 10,)
-           ,ElevatedButton(onPressed: (){
-            Get.toNamed('/chatpage');
-          }, child:Text( " move to the chat ")
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo, // Button color
+              ),
+              onPressed: () {
+                _controller.createUsers();
+                print('done');
+              },
+              child: Text("Create users", style: TextStyle(color: Colors.white),),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+              ),
+              onPressed: () {
+                _controller.signIn(1);
+                print("done");
+              },
+              child: Text("Login user 1"  ,style: TextStyle(color: Colors.white),),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+              ),
+              onPressed: () {
+                _controller.signIn(2);
+                print("login 2");
+              },
+              child: Text("Login user 2",style: TextStyle(color: Colors.white),),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+              ),
+              onPressed: () {
+                _controller.signOut();
+              },
+              child: Text("Sign out",style: TextStyle(color: Colors.white),),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+              ),
+              onPressed: () {
+                Get.toNamed('/chatpage');
+              },
+              child: Text("Move to the chat",style: TextStyle(color: Colors.white),),
+            ),
+          ],
+        ),
       ),
     );
   }
